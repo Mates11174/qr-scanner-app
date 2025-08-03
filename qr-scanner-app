@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Scanner</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="QR Scanner">
+    <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgwIiBoZWlnaHQ9IjE4MCIgdmlld0JveD0iMCAwIDE4MCAxODAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxODAiIGhlaWdodD0iMTgwIiBmaWxsPSIjMDA3QUZGIiByeD0iMjAiLz4KPHN2ZyB4PSI0MCIgeT0iNDAiIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiB2aWV3Qm94PSIwIDAgMjQgMjQiIGZpbGw9IndoaXRlIj4KPHN2ZyBmaWxsPSJjdXJyZW50Q29sb3IiIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0Ij4KICA8cGF0aCBkPSJNNSAySDJDMS40IDIgMSAyLjQgMSAzdjNjMCAuNi40IDEgMSAxczEtLjQgMS0xVjRoMmMuNiAwIDEtLjQgMS0xcy0uNC0xLTEtMXptMTcgMGgtM2MtLjYgMC0xIC40LTEgMXMuNCAxIDEgMWgydjJjMCAuNi40IDEgMSAxczEtLjQgMS0xVjNjMC0uNi0uNC0xLTEtMXptLTE3IDVIMmMtLjYgMC0xIC40LTEgMXMuNCAxIDEgMWgzYy42IDAgMS0uNCAxLTFzLS40LTEtMS0xem0xNyAwSDljLS42IDAtMSAuNC0xIDFzLjQgMSAxIDFoMTNjLjYgMCAxLS40IDEtMXMtLjQtMS0xLTF6bS0xNyA1SDJjLS42IDAtMSAuNC0xIDFzLjQgMSAxIDFoM2MuNiAwIDEtLjQgMS0xcy0uNC0xLTEtMXptMTcgMGgtM2MtLjYgMC0xIC40LTEgMXMuNCAxIDEgMWgzYy42IDAgMS0uNCAxLTFzLS40LTEtMS0xem0tMTcgNUgyYy0uNiAwLTEgLjQtMSAxcy40IDEgMSAxaDNjLjYgMCAxLS40IDEtMXMtLjQtMS0xLTF6bTE3IDBIOS45Yy0uNiAwLTEgLjQtMSAxcy40IDEgMSAxSDIyYy42IDAgMS0uNCAxLTFzLS40LTEtMS0xem0wIDVoLTNjLS42IDAtMSAuNC0xIDFzLjQgMSAxIDFoMnYyYzAgLjYuNCAxIDEgMXMxLS40IDEtMXYtM2MwLS42LS40LTEtMS0xem0tMTcgMEgydjJjMCAuNi40IDEgMSAxczEtLjQgMS0xdi0yaDJjLjYgMCAxLS40IDEtMXMtLjQtMS0xLTF6Ii8+Cjwvc3ZnPgo8L3N2Zz4KPC9zdmc+">
+    <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiUVIgU2Nhbm5lciIsInNob3J0X25hbWUiOiJRUiBTY2FubmVyIiwic3RhcnRfdXJsIjoiLyIsImRpc3BsYXkiOiJzdGFuZGFsb25lIiwidGhlbWVfY29sb3IiOiIjMDA3QUZGIiwiYmFja2dyb3VuZF9jb2xvciI6IiNmZmZmZmYiLCJpY29ucyI6W3sic3JjIjoiZGF0YTppbWFnZS9zdmcreG1sO2Jhc2U2NCxQSE4yWnlCM2FXUjBhRDBpTVRnd0lpQm9aV2xuYUhROUlqRTRNQ0lpSUhacFpYZENiM2c5SWpBZ01DQXhPREFnTVRnd0lpQm1hV3hzUFNKdWIyNWxJaUI0Yld4dWN6MGlhSFIwY0RvdkwzZDNkeTUzTXk1dmNtY3ZNakF3TUM5emRtY2lQZ29rQzNKbFkzUWdkMmxrZEdnOUlqRTRNQ0luSUdobGFXZG9kRDBpTVRnd0lpQm1hV3hzUFNKak1EQTNRVVpHSWlCeWVEMGlNakFpTHo0SyIsInNpemVzIjoiMTgweDE4MCIsInR5cGUiOiJpbWFnZS9zdmcreG1sIn1dfQ==">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .header {
+            text-align: center;
+            padding: 20px 0;
+        }
+        
+        .app-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 20px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+        }
+        
+        .title {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .counter {
+            background: rgba(255,255,255,0.2);
+            padding: 15px;
+            border-radius: 15px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .scan-count {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .scan-button {
+            width: 100%;
+            padding: 20px;
+            background: #007AFF;
+            border: none;
+            border-radius: 15px;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .scan-button:hover {
+            background: #0056b3;
+            transform: translateY(-2px);
+        }
+        
+        .scan-button:disabled {
+            background: #666;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            background: black;
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 20px 0;
+            display: none;
+        }
+        
+        .video-container.active {
+            display: block;
+        }
+        
+        #video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .scan-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200px;
+            height: 200px;
+            border: 3px solid #007AFF;
+            border-radius: 15px;
+            background: rgba(0,122,255,0.1);
+        }
+        
+        .scan-instruction {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            text-align: center;
+            background: rgba(0,0,0,0.7);
+            padding: 10px;
+            border-radius: 10px;
+        }
+        
+        .history {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .history-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .scan-item {
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .scan-code {
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+            word-break: break-all;
+        }
+        
+        .scan-date {
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+        
+        .alert {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            color: black;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            z-index: 1000;
+            max-width: 300px;
+            text-align: center;
+            display: none;
+        }
+        
+        .alert.show {
+            display: block;
+        }
+        
+        .alert-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .alert-button {
+            background: #007AFF;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            margin-top: 15px;
+            cursor: pointer;
+        }
+        
+        .install-prompt {
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+        
+        .clear-button {
+            background: #ff4444;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-left: 10px;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="app-icon">📱</div>
+            <h1 class="title">QR Scanner</h1>
+        </div>
+        
+        <div class="counter">
+            <div class="scan-count" id="scanCount">0</div>
+            <div>Počet skenování</div>
+        </div>
+        
+        <button class="scan-button" id="scanButton">
+            <span>📷</span>
+            <span>Skenovat QR kód</span>
+        </button>
+        
+        <div class="video-container" id="videoContainer">
+            <video id="video" autoplay playsinline></video>
+            <div class="scan-overlay"></div>
+            <div class="scan-instruction">
+                Namiřte kameru na QR kód
+            </div>
+        </div>
+        
+        <div class="install-prompt">
+            💡 <strong>Tip:</strong> Přidejte si tuto stránku na plochu telefonu!<br>
+            Safari → Sdílet → Přidat na plochu
+        </div>
+        
+        <div class="history" id="historySection" style="display: none;">
+            <h3 class="history-title">
+                📋 Historie skenování
+                <button class="clear-button" onclick="clearHistory()">Vymazat</button>
+            </h3>
+            <div id="historyList"></div>
+        </div>
+    </div>
+    
+    <div class="alert" id="alert">
+        <div class="alert-title" id="alertTitle">Upozornění!</div>
+        <div id="alertMessage"></div>
+        <button class="alert-button" onclick="closeAlert()">OK</button>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qr-scanner/1.4.2/qr-scanner.umd.min.js"></script>
+    <script>
+        class QRScannerApp {
+            constructor() {
+                this.scans = JSON.parse(localStorage.getItem('qrScans') || '[]');
+                this.scanner = null;
+                this.isScanning = false;
+                
+                this.initElements();
+                this.updateUI();
+                this.setupEventListeners();
+            }
+            
+            initElements() {
+                this.scanButton = document.getElementById('scanButton');
+                this.videoContainer = document.getElementById('videoContainer');
+                this.video = document.getElementById('video');
+                this.scanCount = document.getElementById('scanCount');
+                this.historySection = document.getElementById('historySection');
+                this.historyList = document.getElementById('historyList');
+                this.alert = document.getElementById('alert');
+                this.alertTitle = document.getElementById('alertTitle');
+                this.alertMessage = document.getElementById('alertMessage');
+            }
+            
+            setupEventListeners() {
+                this.scanButton.addEventListener('click', () => this.toggleScanning());
+                
+                // Přidání na plochu
+                window.addEventListener('beforeinstallprompt', (e) => {
+                    e.preventDefault();
+                    this.deferredPrompt = e;
+                });
+            }
+            
+            async toggleScanning() {
+                if (this.isScanning) {
+                    this.stopScanning();
+                } else {
+                    await this.startScanning();
+                }
+            }
+            
+            async startScanning() {
+                try {
+                    this.scanButton.textContent = 'Zastavit skenování';
+                    this.scanButton.disabled = true;
+                    
+                    // Požádat o přístup ke kameře
+                    const stream = await navigator.mediaDevices.getUserMedia({ 
+                        video: { facingMode: 'environment' } 
+                    });
+                    
+                    this.video.srcObject = stream;
+                    this.videoContainer.classList.add('active');
+                    
+                    // Inicializovat QR scanner
+                    this.scanner = new QrScanner(
+                        this.video,
+                        (result) => this.onQRScanned(result),
+                        {
+                            highlightScanRegion: true,
+                            highlightCodeOutline: true,
+                        }
+                    );
+                    
+                    await this.scanner.start();
+                    this.isScanning = true;
+                    this.scanButton.disabled = false;
+                    
+                } catch (error) {
+                    console.error('Chyba při spuštění kamery:', error);
+                    this.showAlert('Chyba', 'Nepodařilo se spustit kameru. Zkontrolujte oprávnění.');
+                    this.scanButton.textContent = '📷 Skenovat QR kód';
+                    this.scanButton.disabled = false;
+                }
+            }
+            
+            stopScanning() {
+                if (this.scanner) {
+                    this.scanner.stop();
+                    this.scanner.destroy();
+                    this.scanner = null;
+                }
+                
+                if (this.video.srcObject) {
+                    this.video.srcObject.getTracks().forEach(track => track.stop());
+                }
+                
+                this.videoContainer.classList.remove('active');
+                this.scanButton.innerHTML = '<span>📷</span><span>Skenovat QR kód</span>';
+                this.isScanning = false;
+            }
+            
+            onQRScanned(result) {
+                // Vibrace (pokud je podporována)
+                if (navigator.vibrate) {
+                    navigator.vibrate(200);
+                }
+                
+                // Uložit skenování
+                const scan = {
+                    id: Date.now(),
+                    code: result.data,
+                    date: new Date().toISOString()
+                };
+                
+                this.scans.unshift(scan);
+                localStorage.setItem('qrScans', JSON.stringify(this.scans));
+                
+                this.stopScanning();
+                this.updateUI();
+                
+                // Zkontrolovat 6 skenování
+                if (this.scans.length >= 6 && this.scans.length % 6 === 0) {
+                    this.showSixScansAlert();
+                }
+                
+                // Zobrazit úspěch
+                this.showAlert(
+                    'Úspěch! ✅', 
+                    `Naskenován kód: ${result.data.substring(0, 50)}${result.data.length > 50 ? '...' : ''}`
+                );
+            }
+            
+            updateUI() {
+                this.scanCount.textContent = this.scans.length;
+                
+                if (this.scans.length > 0) {
+                    this.historySection.style.display = 'block';
+                    this.renderHistory();
+                }
+            }
+            
+            renderHistory() {
+                this.historyList.innerHTML = this.scans.slice(0, 10).map(scan => `
+                    <div class="scan-item">
+                        <div class="scan-code">${scan.code}</div>
+                        <div class="scan-date">${this.formatDate(scan.date)}</div>
+                    </div>
+                `).join('');
+            }
+            
+            formatDate(dateString) {
+                const date = new Date(dateString);
+                return date.toLocaleString('cs-CZ', {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+            }
+            
+            showSixScansAlert() {
+                this.showAlert('🎉 Gratulace!', 'Bylo provedeno již 6 skenování!');
+                
+                // Push notifikace (pokud je podporována)
+                if ('Notification' in window && Notification.permission === 'granted') {
+                    new Notification('QR Scanner', {
+                        body: 'Bylo provedeno již 6 skenování! 🎉',
+                        icon: '/apple-touch-icon.png'
+                    });
+                }
+            }
+            
+            showAlert(title, message) {
+                this.alertTitle.textContent = title;
+                this.alertMessage.textContent = message;
+                this.alert.classList.add('show');
+            }
+            
+            closeAlert() {
+                this.alert.classList.remove('show');
+            }
+            
+            clearHistory() {
+                if (confirm('Opravdu chcete vymazat všechna skenování?')) {
+                    this.scans = [];
+                    localStorage.removeItem('qrScans');
+                    this.updateUI();
+                    this.historySection.style.display = 'none';
+                }
+            }
+        }
+        
+        // Globální funkce
+        function closeAlert() {
+            app.closeAlert();
+        }
+        
+        function clearHistory() {
+            app.clearHistory();
+        }
+        
+        // Spustit aplikaci
+        let app;
+        document.addEventListener('DOMContentLoaded', () => {
+            app = new QRScannerApp();
+            
+            // Požádat o notifikace
+            if ('Notification' in window && Notification.permission === 'default') {
+                Notification.requestPermission();
+            }
+        });
+        
+        // Service Worker pro offline funkčnost
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('data:text/javascript;base64,c2VsZi5hZGRFdmVudExpc3RlbmVyKCdpbnN0YWxsJywgZnVuY3Rpb24oZXZlbnQpIHsKICBldmVudC53YWl0VW50aWwoc2VsZi5za2lwV2FpdGluZygpKTsKfSk7');
+        }
+    </script>
+</body>
+</html>
